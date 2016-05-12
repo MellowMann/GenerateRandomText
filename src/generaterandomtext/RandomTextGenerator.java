@@ -34,7 +34,7 @@ public class RandomTextGenerator {
         stemLength = k;
     }
     
-        
+    
     public String makeString()
     {
         String str="";
@@ -51,26 +51,33 @@ public class RandomTextGenerator {
     public String generateText()
     {
         String str="";
-        int firstIndex = (int)(Math.random()*(book.length()-stemLength));
+        int firstIndex = (int)(Math.random()*(book.length()-(stemLength*2)));
         str += book.substring(firstIndex, firstIndex + stemLength);
+        int checkLength = 0;
         while(resultLength > str.length())
         {
-            
+            str += nextChar(str.substring(str.length()-stemLength, str.length()));
+            if (checkLength == str.length()-1) {
+                str = str.substring(0,str.length());
+            }
+            checkLength = str.length();
         }
-        return str.substring(0,resultLength);
+        return str;
     }
     //possibility of temp probList being 0
-    public Seed nextSeed(int length, String seed)
+    public String nextChar(String seed)
     {
         ArrayList<String> tempList = new ArrayList<String>();
-        int index = 0;
-        while(index != -1)
-        {
-            index = seed.indexOf(book);
-            book = book.substring(index+length,book.length());
-            tempList.add(Character.toString(book.charAt(index+length)));
+        int index = seed.indexOf(book);
+        int i = 0;
+        while (index != -1) {
+            tempList.add(book.substring(index + stemLength, index + stemLength + 1));
+            i += index;
+            index = seed.indexOf(book.substring(i));
         }
-        return new Seed(length, tempList);
+        if(tempList.size()==0)
+            return "";
+        return tempList.get((int) (Math.random()*(tempList.size())));
     }
     
 }
