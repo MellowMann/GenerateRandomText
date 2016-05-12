@@ -15,7 +15,7 @@ public class Ui {
     public void setFileList()
     {
         fileList = new String[3];
-        fileList[0]="";
+        fileList[0]="C:\\Users\\Ian Sedgewick\\Documents\\NetBeansProjects\\GenerateRandomText\\book1.txt";
         fileList[1]="";
         fileList[2]="";
     }
@@ -29,6 +29,7 @@ public class Ui {
         setFileList();
         int input;
         int k=0;
+        int length=0;
         boolean keepRunning=true;
         
         while(keepRunning)
@@ -42,9 +43,11 @@ public class Ui {
                 keepRunning =false;
             else
             {
-                System.out.println("\n please input the level you would like to generate text with.");
+                System.out.println("please input the level you would like to generate text with:");
                 k = reader.nextInt();
-                rtg = new RandomTextGenerator(fileList[input],k);
+                System.out.println("please input the length of the string you would like to generate:");
+                length = reader.nextInt();
+                rtg = new RandomTextGenerator(fileList[input],k, length);
             }
         }
     }

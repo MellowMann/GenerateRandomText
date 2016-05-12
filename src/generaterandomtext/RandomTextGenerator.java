@@ -51,7 +51,7 @@ public class RandomTextGenerator {
     public String generateText()
     {
         String str="";
-        int firstIndex = (int)(Math.rand()*(book.length()-stemLength));
+        int firstIndex = (int)(Math.random()*(book.length()-stemLength));
         str += book.substring(firstIndex, firstIndex + stemLength);
         while(resultLength > str.length())
         {
@@ -63,14 +63,13 @@ public class RandomTextGenerator {
     public Seed nextSeed(int length, String seed)
     {
         ArrayList<String> tempList = new ArrayList<String>();
-        int index = seed.indexOf(book);
-        int i = 0;
-        while (index != -1 && !(book.substring(index+length, index + length + 2).equals(seed + "//Z"))) {
-            tempList.add(book.substring(index+length, index + length*2));
-            i += index;
-            index = seed.indexOf(book.substring(i));
+        int index = 0;
+        while(index != -1)
+        {
+            index = seed.indexOf(book);
+            book = book.substring(index+length,book.length());
+            tempList.add(Character.toString(book.charAt(index+length)));
         }
-        
         return new Seed(length, tempList);
     }
     
