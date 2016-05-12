@@ -53,31 +53,51 @@ public class RandomTextGenerator {
         String str="";
         int firstIndex = (int)(Math.random()*(book.length()-(stemLength*2)));
         str += book.substring(firstIndex, firstIndex + stemLength);
-        int checkLength = 0;
+        //int checkLength = 0;
         while(resultLength > str.length())
         {
             str += nextChar(str.substring(str.length()-stemLength, str.length()));
-            if (checkLength == str.length()-1) {
-                str = str.substring(0,str.length());
-            }
-            checkLength = str.length();
+            //if (checkLength == str.length()) {
+              //  str = str.substring(0,str.length());
+            //}
+            //checkLength = str.length();
+            //System.out.println(str);
+            System.out.println(str);
         }
         return str;
     }
-    //possibility of temp probList being 0
-    public String nextChar(String seed)
+    
+
+
+    public String nextChar(String seed)//seed must be the last k length characters in the main string
     {
-        ArrayList<String> tempList = new ArrayList<String>();
-        int index = seed.indexOf(book);
-        int i = 0;
-        while (index != -1) {
-            tempList.add(book.substring(index + stemLength, index + stemLength + 1));
-            i += index;
-            index = seed.indexOf(book.substring(i));
+        ArrayList<String> probList = new ArrayList<String>();
+        String tempBook = book;
+        int index = tempBook.indexOf(seed);
+        while(index !=-1)
+        {
+           probList.add(tempBook.substring(index + stemLength, index + stemLength+1));
+           tempBook = tempBook.substring(index+stemLength);
         }
-        if(tempList.size()==0)
+        if(probList.size()==0)
             return "";
-        return tempList.get((int) (Math.random()*(tempList.size())));
+        return probList.get((int) (Math.random()*(probList.size())));
     }
+    
+    
+//    public String nextChar(String seed)
+//    {
+//        ArrayList<String> tempList = new ArrayList<String>();
+//        int index = seed.indexOf(book);
+//        int i = 0;
+//        while (index != -1) {
+//            tempList.add(book.substring(index + stemLength, index + stemLength + 1));
+//            i += index+stemLength;
+//            index = seed.indexOf(book.substring(i));
+//        }
+//        if(tempList.size()==0)
+//            return "";
+//        return tempList.get((int) (Math.random()*(tempList.size())));
+//    }
     
 }
